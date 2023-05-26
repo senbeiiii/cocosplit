@@ -6,7 +6,8 @@ from skmultilearn.model_selection import iterative_train_test_split
 import numpy as np
 
 
-def save_coco(file, info, licenses, images, annotations, categories):
+# def save_coco(file, info, licenses, images, annotations, categories):
+def save_coco(file, images, annotations, categories):
     with open(file, "wt", encoding="UTF-8") as coco:
         #        json.dump({ 'info': info, 'licenses': licenses, 'images': images,
         #            'annotations': annotations, 'categories': categories}, coco, indent=2, sort_keys=True)
@@ -105,19 +106,14 @@ def main(args):
                 np.array([annotation_categories]).T,
                 test_size=1 - args.split,
             )
-
             save_coco(
                 args.train,
-                info,
-                licenses,
                 filter_images(images, X_train.reshape(-1)),
                 X_train.reshape(-1).tolist(),
                 categories,
             )
             save_coco(
                 args.test,
-                info,
-                licenses,
                 filter_images(images, X_test.reshape(-1)),
                 X_test.reshape(-1).tolist(),
                 categories,
